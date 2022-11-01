@@ -9,11 +9,13 @@ use image::{
 };
 
 fn erosion(img: &GrayImage, window_indices: &Vec<(i32,i32)>) -> GrayImage {
+    // TODO
     let mut out_img: GrayImage = GrayImage::new(img.width(), img.height());
     out_img
 }
 
 fn dilation(img: &GrayImage, window_indices: &Vec<(i32,i32)>) -> GrayImage {
+    // TODO
     let mut out_img: GrayImage = GrayImage::new(img.width(), img.height());
     out_img
 }
@@ -27,26 +29,31 @@ fn closing(img: &GrayImage, window_indices: &Vec<(i32,i32)>) -> GrayImage {
 }
 
 fn opening_with_reconstruction(img: &GrayImage, window_indices: &Vec<(i32,i32)>) -> GrayImage {
+    // TODO
     let er_img: &GrayImage = &erosion(img, window_indices);
     let mut out_img: GrayImage = GrayImage::new(img.width(), img.height());
     out_img
 }
 
 fn closing_with_reconstruction(img: &GrayImage, window_indices: &Vec<(i32,i32)>) -> GrayImage {
+    // TODO
     let di_img: &GrayImage = &dilation(img, window_indices);
     let mut out_img: GrayImage = GrayImage::new(img.width(), img.height());
     out_img
 }
 
 fn square(window_size: u32) -> Vec<(i32,i32)> {
+    // TODO
     Vec::new()
 }
 
 fn circle(window_size: u32) -> Vec<(i32,i32)> {
+    // TODO
     Vec::new()
 }
 
 fn plus(window_size: u32) -> Vec<(i32,i32)> {
+    // TODO
     Vec::new()
 }
 
