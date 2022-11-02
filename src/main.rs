@@ -58,8 +58,14 @@ fn circle(window_size: u32) -> Vec<(i32,i32)> {
 }
 
 fn plus(window_size: u32) -> Vec<(i32,i32)> {
-    // TODO
-    Vec::new()
+    let mut window_indices: Vec<(i32, i32)> = Vec::new();
+    for x in -(window_size as i32)+1..window_size as i32{
+        if x != 0 {
+            window_indices.push((x,0));
+        }
+        window_indices.push((0,x));
+    }
+    window_indices
 }
 
 fn usage() {
