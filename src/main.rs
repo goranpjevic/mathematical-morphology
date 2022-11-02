@@ -43,8 +43,13 @@ fn closing_with_reconstruction(img: &GrayImage, window_indices: &Vec<(i32,i32)>)
 }
 
 fn square(window_size: u32) -> Vec<(i32,i32)> {
-    // TODO
-    Vec::new()
+    let mut window_indices: Vec<(i32, i32)> = Vec::new();
+    for x in -(window_size as i32)+1..window_size as i32{
+        for y in -(window_size as i32)+1..window_size as i32 {
+            window_indices.push((x,y));
+        }
+    }
+    window_indices
 }
 
 fn circle(window_size: u32) -> Vec<(i32,i32)> {
