@@ -53,9 +53,8 @@ fn square(window_size: u32) -> Vec<(i32,i32)> {
 }
 
 fn circle(window_size: u32) -> Vec<(i32,i32)> {
-    let bounding_square_window_indices: Vec<(i32, i32)> = square(window_size);
     let mut window_indices: Vec<(i32, i32)> = Vec::new();
-    for (x,y) in bounding_square_window_indices {
+    for (x,y) in square(window_size) {
         let dist_sq: i32 = x.pow(2) + y.pow(2);
         if dist_sq <= (window_size as i32 - 1).pow(2) {
             window_indices.push((x,y));
