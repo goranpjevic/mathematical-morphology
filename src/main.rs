@@ -111,18 +111,19 @@ fn main() {
         },
     };
     let window_indices: Vec<(i32,i32)> = window_indices_fn(window_size);
-    let out_img: GrayImage = match args[4].as_ref() {
-        "erosion" => erosion(img, &window_indices),
-        "dilation" => dilation(img, &window_indices),
-        "opening" => opening(img, &window_indices),
-        "closing" => closing(img, &window_indices),
-        "opening-with-reconstruction" => opening_with_reconstruction(img, &window_indices),
-        "closing-with-reconstruction" => closing_with_reconstruction(img, &window_indices),
+    let out_img_fn: fn(&GrayImage, &Vec<(i32,i32)>) -> GrayImage = match args[4].as_ref() {
+        "erosion" => erosion,
+        "dilation" => dilation,
+        "opening" => opening,
+        "closing" => closing,
+        "opening-with-reconstruction" => opening_with_reconstruction,
+        "closing-with-reconstruction" => closing_with_reconstruction,
         _ => {
             usage();
             panic!("unknown operator {}", args[4])
         },
     };
+    let out_img: GrayImage = out_img_fn(img, &window_indices);
 
     out_img.save(&args[5]).unwrap();
 }
