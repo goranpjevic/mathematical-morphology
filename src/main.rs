@@ -97,17 +97,17 @@ fn usage() {
     println!("usage:\n");
     print!("    mathematical-morphology [input_image_path] [window_size] [window] [operator]");
     print!(" [output_image_path]\n\n");
-    println!("windows:\n");
-    println!("    square");
-    println!("    circle");
-    println!("    plus\n");
-    println!("operators:\n");
-    println!("    erosion");
-    println!("    dilation");
-    println!("    opening");
-    println!("    closing");
-    println!("    opening-with-reconstruction");
-    println!("    closing-with-reconstruction");
+    println!("available windows:");
+    println!("  - square");
+    println!("  - circle");
+    println!("  - plus\n");
+    println!("available operators:");
+    println!("  - erosion");
+    println!("  - dilation");
+    println!("  - opening");
+    println!("  - closing");
+    println!("  - opening-with-reconstruction");
+    println!("  - closing-with-reconstruction");
 }
 
 fn main() {
