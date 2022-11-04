@@ -20,9 +20,7 @@ fn er_di(img: &GrayImage, window_indices: &Vec<(i32,i32)>, er_or_di: bool) -> Gr
                 let wy_px: i32 = y as i32+wy;
                 if !(wx_px < 0 || wx_px >= img.width() as i32 || wy_px < 0 || wy_px >= img.height() as i32) {
                     let window_px = img.get_pixel(wx_px as u32, wy_px as u32);
-                    if er_or_di && window_px.0 < pixel.0 {
-                        pixel = *window_px;
-                    } else if (!er_or_di) && window_px.0 > pixel.0 {
+                    if (er_or_di && window_px.0 < pixel.0) || ((!er_or_di) && window_px.0 > pixel.0) {
                         pixel = *window_px;
                     }
                 }
