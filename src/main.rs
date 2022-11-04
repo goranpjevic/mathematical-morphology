@@ -101,15 +101,16 @@ fn main() {
     let decoded_image: DynamicImage = Reader::open(&args[1]).unwrap().decode().unwrap();
     let img: &GrayImage = decoded_image.as_luma8().unwrap();
     let window_size: u32 = args[2].parse::<u32>().unwrap();
-    let window_indices: Vec<(i32,i32)> = match args[3].as_ref() {
-        "square" => square(window_size),
-        "circle" => circle(window_size),
-        "plus" => plus(window_size),
+    let window_indices_fn: fn(u32) -> Vec<(i32,i32)> = match args[3].as_ref() {
+        "square" => square,
+        "circle" => circle,
+        "plus" => plus,
         _=> {
             usage();
             panic!("unknown window {}", args[3])
         },
     };
+    let window_indices: Vec<(i32,i32)> = window_indices_fn(window_size);
     let out_img: GrayImage = match args[4].as_ref() {
         "erosion" => erosion(img, &window_indices),
         "dilation" => dilation(img, &window_indices),
