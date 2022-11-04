@@ -96,11 +96,11 @@ fn plus(window_size: u32) -> Vec<(i32,i32)> {
 fn usage() {
     println!("usage:\n");
     print!("    mathematical-morphology [input_image_path] [window_size] [window] [operator]");
-    print!("[output_image_path]\n\n");
+    print!(" [output_image_path]\n\n");
     println!("windows:\n");
     println!("    square");
     println!("    circle");
-    println!("    plus");
+    println!("    plus\n");
     println!("operators:\n");
     println!("    erosion");
     println!("    dilation");
