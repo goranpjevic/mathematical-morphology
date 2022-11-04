@@ -1,3 +1,20 @@
                             mathematical-morphology
 
 apply morphological operators on images.
+
+usage:
+
+    mathematical-morphology [input_image_path] [window_size] [window] [operator] [output_image_path]
+
+available windows:
+  - square
+  - circle
+  - plus
+
+available operators:
+  - erosion
+  - dilation
+  - opening
+  - closing
+  - opening-with-reconstruction
+  - closing-with-reconstruction
