@@ -10,28 +10,14 @@ use image::{
 };
 
 fn erosion(img: &GrayImage, window_indices: &Vec<(i32,i32)>) -> GrayImage {
-    let mut out_img: GrayImage = GrayImage::new(img.width(), img.height());
-    let mut pixel: Luma<u8>;
-    for x in 0..img.width() {
-        for y in 0..img.height() {
-            pixel = *img.get_pixel(x,y);
-            for (wx,wy) in window_indices {
-                let wx_px: i32 = x as i32+wx;
-                let wy_px: i32 = y as i32+wy;
-                if !(wx_px < 0 || wx_px >= img.width() as i32 || wy_px < 0 || wy_px >= img.height() as i32) {
-                    let window_px = img.get_pixel(wx_px as u32, wy_px as u32);
-                    if window_px.0 < pixel.0 {
-                        pixel = *window_px;
-                    }
-                }
-            }
-            out_img.put_pixel(x,y,pixel);
-        }
-    }
-    out_img
+    er_di(img, window_indices, true)
 }
 
 fn dilation(img: &GrayImage, window_indices: &Vec<(i32,i32)>) -> GrayImage {
+    er_di(img, window_indices, false)
+}
+
+fn er_di(img: &GrayImage, window_indices: &Vec<(i32,i32)>, er_or_di: bool) -> GrayImage {
     let mut out_img: GrayImage = GrayImage::new(img.width(), img.height());
     let mut pixel: Luma<u8>;
     for x in 0..img.width() {
@@ -42,7 +28,9 @@ fn dilation(img: &GrayImage, window_indices: &Vec<(i32,i32)>) -> GrayImage {
                 let wy_px: i32 = y as i32+wy;
                 if !(wx_px < 0 || wx_px >= img.width() as i32 || wy_px < 0 || wy_px >= img.height() as i32) {
                     let window_px = img.get_pixel(wx_px as u32, wy_px as u32);
-                    if window_px.0 > pixel.0 {
+                    if er_or_di && window_px.0 < pixel.0 {
+                        pixel = *window_px;
+                    } else if (!er_or_di) && window_px.0 > pixel.0 {
                         pixel = *window_px;
                     }
                 }
