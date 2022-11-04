@@ -9,14 +9,6 @@ use image::{
     Luma,
 };
 
-fn erosion(img: &GrayImage, window_indices: &Vec<(i32,i32)>) -> GrayImage {
-    er_di(img, window_indices, true)
-}
-
-fn dilation(img: &GrayImage, window_indices: &Vec<(i32,i32)>) -> GrayImage {
-    er_di(img, window_indices, false)
-}
-
 fn er_di(img: &GrayImage, window_indices: &Vec<(i32,i32)>, er_or_di: bool) -> GrayImage {
     let mut out_img: GrayImage = GrayImage::new(img.width(), img.height());
     let mut pixel: Luma<u8>;
@@ -39,6 +31,14 @@ fn er_di(img: &GrayImage, window_indices: &Vec<(i32,i32)>, er_or_di: bool) -> Gr
         }
     }
     out_img
+}
+
+fn erosion(img: &GrayImage, window_indices: &Vec<(i32,i32)>) -> GrayImage {
+    er_di(img, window_indices, true)
+}
+
+fn dilation(img: &GrayImage, window_indices: &Vec<(i32,i32)>) -> GrayImage {
+    er_di(img, window_indices, false)
 }
 
 fn opening(img: &GrayImage, window_indices: &Vec<(i32,i32)>) -> GrayImage {
