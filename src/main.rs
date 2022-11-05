@@ -158,10 +158,7 @@ fn main() {
         "square" => square,
         "circle" => circle,
         "plus" => plus,
-        _=> {
-            usage();
-            panic!("unknown window {}", args[3])
-        },
+        _=> panic!("unknown window {}", args[3]),
     };
     let window_indices: Vec<(i32,i32)> = window_indices_fn(window_size);
     let out_img_fn: fn(&GrayImage, &Vec<(i32,i32)>) -> GrayImage = match args[4].as_ref() {
@@ -171,10 +168,7 @@ fn main() {
         "closing" => closing,
         "opening-by-reconstruction" => opening_by_reconstruction,
         "closing-by-reconstruction" => closing_by_reconstruction,
-        _ => {
-            usage();
-            panic!("unknown operator {}", args[4])
-        },
+        _ => panic!("unknown operator {}", args[4]),
     };
     let out_img: GrayImage = out_img_fn(img, &window_indices);
 
