@@ -10,6 +10,8 @@ use image::{
     Luma,
 };
 
+// apply the erosion or dilation morphological operators if 'er_or_di' is true or false
+// respectively
 fn er_di(img: &GrayImage, window_indices: &Vec<(i32,i32)>, er_or_di: bool) -> GrayImage {
     let mut out_img: GrayImage = GrayImage::new(img.width(), img.height());
     let mut pixel: Luma<u8>;
@@ -48,6 +50,8 @@ fn closing(img: &GrayImage, window_indices: &Vec<(i32,i32)>) -> GrayImage {
     erosion(&dilation(img, window_indices), window_indices)
 }
 
+// apply the opening by reconstruction or closing by reconstruction morphological operators if
+// 'op_or_cl' is true or false respectively
 fn op_cl_rec(img: &GrayImage, window_indices: &Vec<(i32,i32)>, op_or_cl: bool) -> GrayImage {
     let mut out_img: GrayImage = if op_or_cl {
         erosion(img, window_indices)
