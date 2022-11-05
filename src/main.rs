@@ -48,16 +48,28 @@ fn closing(img: &GrayImage, window_indices: &Vec<(i32,i32)>) -> GrayImage {
     erosion(&dilation(img, window_indices), window_indices)
 }
 
-fn opening_with_reconstruction(img: &GrayImage, window_indices: &Vec<(i32,i32)>) -> GrayImage {
-    let mut out_img: GrayImage = erosion(img, window_indices);
+fn op_cl_rec(img: &GrayImage, window_indices: &Vec<(i32,i32)>, op_or_cl: bool) -> GrayImage {
+    let mut out_img: GrayImage = if op_or_cl {
+        erosion(img, window_indices)
+    } else {
+        dilation(img, window_indices)
+    };
     let mut change: bool;
     loop {
         change = false;
-        let di_img: GrayImage = dilation(&out_img, &square(2));
+        let di_er_img: GrayImage = if op_or_cl {
+            dilation(&out_img, &square(2))
+        } else {
+            erosion(&out_img, &square(2))
+        };
         for x in 0..out_img.width() {
             for y in 0..out_img.height() {
                 let original_px_value: u8 = out_img.get_pixel(x,y).0[0];
-                let new_px_value: u8 = cmp::min(img.get_pixel(x,y).0[0], di_img.get_pixel(x,y).0[0]);
+                let new_px_value: u8 = if op_or_cl {
+                    cmp::min(img.get_pixel(x,y).0[0], di_er_img.get_pixel(x,y).0[0])
+                } else {
+                    cmp::max(img.get_pixel(x,y).0[0], di_er_img.get_pixel(x,y).0[0])
+                };
                 if original_px_value != new_px_value {
                     change = true;
                     out_img.put_pixel(x,y,Luma([new_px_value]));
@@ -71,27 +83,12 @@ fn opening_with_reconstruction(img: &GrayImage, window_indices: &Vec<(i32,i32)>)
     out_img
 }
 
+fn opening_with_reconstruction(img: &GrayImage, window_indices: &Vec<(i32,i32)>) -> GrayImage {
+    op_cl_rec(img, window_indices, true)
+}
+
 fn closing_with_reconstruction(img: &GrayImage, window_indices: &Vec<(i32,i32)>) -> GrayImage {
-    let mut out_img: GrayImage = dilation(img, window_indices);
-    let mut change: bool;
-    loop {
-        change = false;
-        let er_img: GrayImage = erosion(&out_img, &square(2));
-        for x in 0..out_img.width() {
-            for y in 0..out_img.height() {
-                let original_px_value: u8 = out_img.get_pixel(x,y).0[0];
-                let new_px_value: u8 = cmp::max(img.get_pixel(x,y).0[0], er_img.get_pixel(x,y).0[0]);
-                if original_px_value != new_px_value {
-                    change = true;
-                    out_img.put_pixel(x,y,Luma([new_px_value]));
-                }
-            }
-        }
-        if change {
-            break;
-        }
-    }
-    out_img
+    op_cl_rec(img, window_indices, false)
 }
 
 fn square(window_size: u32) -> Vec<(i32,i32)> {
