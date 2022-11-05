@@ -57,7 +57,7 @@ fn op_cl_rec(img: &GrayImage, window_indices: &Vec<(i32,i32)>, op_or_cl: bool) -
     let mut change: bool;
     loop {
         change = false;
-        let di_er_img: GrayImage = if op_or_cl {
+        let new_img: GrayImage = if op_or_cl {
             dilation(&out_img, &square(2))
         } else {
             erosion(&out_img, &square(2))
@@ -66,9 +66,9 @@ fn op_cl_rec(img: &GrayImage, window_indices: &Vec<(i32,i32)>, op_or_cl: bool) -
             for y in 0..out_img.height() {
                 let original_px_value: u8 = out_img.get_pixel(x,y).0[0];
                 let new_px_value: u8 = if op_or_cl {
-                    cmp::min(img.get_pixel(x,y).0[0], di_er_img.get_pixel(x,y).0[0])
+                    cmp::min(img.get_pixel(x,y).0[0], new_img.get_pixel(x,y).0[0])
                 } else {
-                    cmp::max(img.get_pixel(x,y).0[0], di_er_img.get_pixel(x,y).0[0])
+                    cmp::max(img.get_pixel(x,y).0[0], new_img.get_pixel(x,y).0[0])
                 };
                 if original_px_value != new_px_value {
                     change = true;
