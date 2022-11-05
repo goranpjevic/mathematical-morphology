@@ -1,5 +1,6 @@
 use std::{
     env,
+    cmp,
 };
 
 use image::{
@@ -55,11 +56,11 @@ fn opening_with_reconstruction(img: &GrayImage, window_indices: &Vec<(i32,i32)>)
         let di_img: GrayImage = dilation(&out_img, &square(2));
         for x in 0..out_img.width() {
             for y in 0..out_img.height() {
-                if img.get_pixel(x,y).0 > di_img.get_pixel(x,y).0 {
+                let original_px_value: u8 = out_img.get_pixel(x,y).0;
+                let new_px_value: u8 = cmp::min(img.get_pixel(x,y).0, di_img(x,y).0)
+                if original_px_value != new_px_value {
                     change = true;
-                    out_img.put_pixel(x,y,*di_img.get_pixel(x,y));
-                } else {
-                    out_img.put_pixel(x,y,*img.get_pixel(x,y));
+                    out_img.put_pixel(x,y,Luma(new_px_value));
                 }
             }
         }
