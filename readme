@@ -16,5 +16,5 @@ available operators:
   - dilation
   - opening
   - closing
-  - opening-with-reconstruction
-  - closing-with-reconstruction
+  - opening-by-reconstruction
+  - closing-by-reconstruction

@@ -83,11 +83,11 @@ fn op_cl_rec(img: &GrayImage, window_indices: &Vec<(i32,i32)>, op_or_cl: bool) -
     out_img
 }
 
-fn opening_with_reconstruction(img: &GrayImage, window_indices: &Vec<(i32,i32)>) -> GrayImage {
+fn opening_by_reconstruction(img: &GrayImage, window_indices: &Vec<(i32,i32)>) -> GrayImage {
     op_cl_rec(img, window_indices, true)
 }
 
-fn closing_with_reconstruction(img: &GrayImage, window_indices: &Vec<(i32,i32)>) -> GrayImage {
+fn closing_by_reconstruction(img: &GrayImage, window_indices: &Vec<(i32,i32)>) -> GrayImage {
     op_cl_rec(img, window_indices, false)
 }
 
@@ -136,8 +136,8 @@ fn usage() {
     println!("  - dilation");
     println!("  - opening");
     println!("  - closing");
-    println!("  - opening-with-reconstruction");
-    println!("  - closing-with-reconstruction");
+    println!("  - opening-by-reconstruction");
+    println!("  - closing-by-reconstruction");
 }
 
 fn main() {
@@ -165,8 +165,8 @@ fn main() {
         "dilation" => dilation,
         "opening" => opening,
         "closing" => closing,
-        "opening-with-reconstruction" => opening_with_reconstruction,
-        "closing-with-reconstruction" => closing_with_reconstruction,
+        "opening-by-reconstruction" => opening_by_reconstruction,
+        "closing-by-reconstruction" => closing_by_reconstruction,
         _ => {
             usage();
             panic!("unknown operator {}", args[4])
