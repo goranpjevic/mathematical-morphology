@@ -48,9 +48,25 @@ fn closing(img: &GrayImage, window_indices: &Vec<(i32,i32)>) -> GrayImage {
 }
 
 fn opening_with_reconstruction(img: &GrayImage, window_indices: &Vec<(i32,i32)>) -> GrayImage {
-    // TODO
-    let er_img: &GrayImage = &erosion(img, window_indices);
-    let mut out_img: GrayImage = GrayImage::new(img.width(), img.height());
+    let mut out_img: GrayImage = erosion(img, window_indices);
+    let mut change: bool;
+    loop {
+        change = false;
+        let di_img: GrayImage = dilation(&out_img, &square(2));
+        for x in 0..out_img.width() {
+            for y in 0..out_img.height() {
+                if img.get_pixel(x,y).0 > di_img.get_pixel(x,y).0 {
+                    change = true;
+                    out_img.put_pixel(x,y,*di_img.get_pixel(x,y));
+                } else {
+                    out_img.put_pixel(x,y,*img.get_pixel(x,y));
+                }
+            }
+        }
+        if change {
+            break;
+        }
+    }
     out_img
 }
 
