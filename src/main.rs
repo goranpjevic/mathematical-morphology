@@ -1,6 +1,7 @@
 use std::{
     env,
     cmp,
+    time,
 };
 
 use image::{
@@ -53,13 +54,16 @@ fn closing(img: &GrayImage, window_indices: &Vec<(i32,i32)>) -> GrayImage {
 // apply the opening by reconstruction or closing by reconstruction morphological operators if
 // 'op_or_cl' is true or false respectively
 fn op_cl_rec(img: &GrayImage, window_indices: &Vec<(i32,i32)>, op_or_cl: bool) -> GrayImage {
+    let start_time: time::Instant = time::Instant::now();
     let mut out_img: GrayImage = if op_or_cl {
         erosion(img, window_indices)
     } else {
         dilation(img, window_indices)
     };
     let mut change: bool;
+    let mut i: u32 = 0;
     loop {
+        i+=1;
         change = false;
         let new_img: GrayImage = if op_or_cl {
             dilation(&out_img, &square(2))
@@ -84,6 +88,9 @@ fn op_cl_rec(img: &GrayImage, window_indices: &Vec<(i32,i32)>, op_or_cl: bool) -
             break;
         }
     }
+    let total_time: time::Duration = start_time.elapsed();
+    println!("number of iterations:  {}", i);
+    println!("total time:  {} ms", total_time.as_millis());
     out_img
 }
 
