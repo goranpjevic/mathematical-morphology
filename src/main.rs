@@ -84,7 +84,7 @@ fn op_cl_rec(img: &GrayImage, window_indices: &Vec<(i32,i32)>, op_or_cl: bool) -
                 }
             }
         }
-        if change {
+        if !change {
             break;
         }
     }
